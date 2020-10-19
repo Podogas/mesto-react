@@ -1,14 +1,35 @@
 import React , { useState } from 'react';
+import {CurrentUserContext} from '../../contexts/CurrentUserContext.js';
+import mestoApi from '../../utils/Api.js';
 import Header from '../Header/Header.js';
 import Main from '../Main/Main.js';
 import Footer from '../Footer/Footer.js';
 import ImagePopup from '../ImagePopup/ImagePopup.js';
 import PopupWithForm from '../PopupWithForm/PopupWithForm.js';
+import EditProfilePopup from '../EditProfilePopup/EditProfilePopup.js';
+import EditAvatarPopup from '../EditAvatarPopup/EditAvatarPopup.js';
+import AddPlacePopup from '../AddPlacePopup/AddPlacePopup.js';
+
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(false);
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
+  React.useEffect(() => {
+    mestoApi.getInitialCards().then((res)=>{
+      setCards(res);
+    })
+    .catch( err => console.error(`Ошибка при загрузке фотографий ${err}` ));
+  }, []); 
+
+  React.useEffect(() => {
+    mestoApi.getUserInfo().then((res)=>{
+      setCurrentUser(res)
+    })
+    .catch( err => console.error(`Ошибка при загрузке данных пользователя ${err}` ));
+  }, []);
 
   const handleEditProfileClick = ()=>{
    setIsEditProfilePopupOpen(!isEditProfilePopupOpen);
@@ -28,46 +49,63 @@ function App() {
   const handleCardClick =(card)=>{
     setSelectedCard(card)
   }
+  const handleUpdateUser =(data)=>{
+    mestoApi.patchUserInfo(data).then((res)=>{
+      setCurrentUser(res)
+      closeAllPopups();
+    })
+  }
+  const handleUpdateAvatar =(url)=>{
+    mestoApi.patchAvatar(url.avatar).then((res)=>{
+      setCurrentUser(res)
+      closeAllPopups();
+    })
+  }
+    function handleCardLike(card){
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    const method = isLiked? 'DELETE' : 'PUT';
+    mestoApi.like(card._id, method).then((newCard) => {
+      const newCards = cards.map((c) => c._id === card._id ? newCard : c);
+      setCards(newCards);
+    });
+  }
+  function handleCardDeletion(card){
+    mestoApi.deleteCard(card._id).then((deleledCard)=> {
+      const newCards = cards.filter((c)=> c._id !== card._id);
+      setCards(newCards);
+    })
+  }
+  function handleAddPlaceSubmit(data){
+    mestoApi.postNewCard(data).then((newCard)=>{  
+      setCards([...cards, newCard]); 
+      closeAllPopups();
+    })
+  }
   return (
-  <>
-  <div className="page">
+  <CurrentUserContext.Provider value={currentUser}>
+   <div className="page">
     <Header/>
     <Main onEditProfile={handleEditProfileClick}
           onAddPlace={handleAddPlaceClick}
           onEditAvatar={handleEditAvatarClick}
           handleCardClick ={handleCardClick}
+          cards = {cards}
+          onCardLike = {handleCardLike}
+          onCardDelete = {handleCardDeletion}
           />
-      <PopupWithForm name="edit-profile" title="Редактировать профиль" isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} btnText="Сохранить">
-          <input type="text" name="name" id="profileNameInput" placeholder="Имя" minLength="2" maxLength="40" required
-          className="popup__input-item popup__input-item_edit-profile" />
-          <span className="popup__input-error-message" id="profileNameInput-err"></span>
-          <input type="text" name="about" id="profileJobInput" placeholder="О себе" minLength="2" maxLength="200" required 
-          className="popup__input-item popup__input-item_edit-profile" />
-          <span className="popup__input-error-message" id="profileJobInput-err"></span>   
-      </PopupWithForm>
-      <PopupWithForm name="add-photo" title="Новое место" isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} btnText="Сохранить">
-        <input type="text" name="photoName" id="photoNameInput" placeholder="Название" minLength="1" maxLength="30" required className="popup__input-item popup__input-item_add-photo" />
-        <span className="popup__input-error-message" id="photoNameInput-err"></span>
-        <input type="url" name="photoUrl" id="photoUrlInput" placeholder="Ссылка на картинку" required className="popup__input-item popup__input-item_add-photo" />
-        <span className="popup__input-error-message" id="photoUrlInput-err"></span>
-      </PopupWithForm>
-      <PopupWithForm name="edit-avatar" title="Обновить аватар" isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} btnText="Сохранить">
-        <input type="url" name="avatarUrl" id="avatarUrlInput" placeholder="Ссылка на картинку" required className="popup__input-item popup__input-item_edit-avatar" />
-        <span className="popup__input-error-message" id="avatarUrlInput-err"></span>
-      </PopupWithForm>
+      <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
+
+      <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
+
+      
+      <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/> 
+    
       <PopupWithForm name="confirm-deletion" title="Вы уверены?" btnText="Да">
       </PopupWithForm>          
     <Footer/>
     <ImagePopup card={selectedCard} onClose={closeAllPopups}></ImagePopup>
    </div>  
-
-
-
-    
-
-    
-
-  </>
+  </CurrentUserContext.Provider>
   );
 }
 
