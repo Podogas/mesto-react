@@ -54,12 +54,14 @@ function App() {
       setCurrentUser(res)
       closeAllPopups();
     })
+    .catch( err => console.error(`Ошибка при загрузке данных пользователя ${err}` ));
   }
   const handleUpdateAvatar =(url)=>{
     mestoApi.patchAvatar(url.avatar).then((res)=>{
       setCurrentUser(res)
       closeAllPopups();
     })
+    .catch( err => console.error(`Ошибка ${err}` ));
   }
     function handleCardLike(card){
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -67,19 +69,22 @@ function App() {
     mestoApi.like(card._id, method).then((newCard) => {
       const newCards = cards.map((c) => c._id === card._id ? newCard : c);
       setCards(newCards);
-    });
+    })
+    .catch( err => console.error(`Ошибка ${err}` ));
   }
   function handleCardDeletion(card){
     mestoApi.deleteCard(card._id).then((deleledCard)=> {
       const newCards = cards.filter((c)=> c._id !== card._id);
       setCards(newCards);
     })
+    .catch( err => console.error(`Ошибка ${err}` ));
   }
   function handleAddPlaceSubmit(data){
     mestoApi.postNewCard(data).then((newCard)=>{  
       setCards([...cards, newCard]); 
       closeAllPopups();
     })
+    .catch( err => console.error(`Ошибка ${err}` ));
   }
   return (
   <CurrentUserContext.Provider value={currentUser}>
