@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/static/css/main.f1642e67.chunk.css",
-    "main.js": "/static/js/main.b0292f27.chunk.js",
-    "main.js.map": "/static/js/main.b0292f27.chunk.js.map",
-    "runtime-main.js": "/static/js/runtime-main.e8402bce.js",
-    "runtime-main.js.map": "/static/js/runtime-main.e8402bce.js.map",
-    "static/js/2.096056a2.chunk.js": "/static/js/2.096056a2.chunk.js",
-    "static/js/2.096056a2.chunk.js.map": "/static/js/2.096056a2.chunk.js.map",
-    "index.html": "/index.html",
-    "precache-manifest.44b5a50831f2a58b8c086d1c0615e2db.js": "/precache-manifest.44b5a50831f2a58b8c086d1c0615e2db.js",
-    "service-worker.js": "/service-worker.js",
-    "static/css/main.f1642e67.chunk.css.map": "/static/css/main.f1642e67.chunk.css.map",
-    "static/js/2.096056a2.chunk.js.LICENSE.txt": "/static/js/2.096056a2.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/static/media/trash-can.4220563a.svg"
+    "main.css": "//podogas.github.io/mesto-react/static/css/main.4badfcd4.chunk.css",
+    "main.js": "//podogas.github.io/mesto-react/static/js/main.7715d2ea.chunk.js",
+    "main.js.map": "//podogas.github.io/mesto-react/static/js/main.7715d2ea.chunk.js.map",
+    "runtime-main.js": "//podogas.github.io/mesto-react/static/js/runtime-main.7b132e14.js",
+    "runtime-main.js.map": "//podogas.github.io/mesto-react/static/js/runtime-main.7b132e14.js.map",
+    "static/js/2.096056a2.chunk.js": "//podogas.github.io/mesto-react/static/js/2.096056a2.chunk.js",
+    "static/js/2.096056a2.chunk.js.map": "//podogas.github.io/mesto-react/static/js/2.096056a2.chunk.js.map",
+    "index.html": "//podogas.github.io/mesto-react/index.html",
+    "precache-manifest.a72536dea9bc5d963d58c871a2f947fb.js": "//podogas.github.io/mesto-react/precache-manifest.a72536dea9bc5d963d58c871a2f947fb.js",
+    "service-worker.js": "//podogas.github.io/mesto-react/service-worker.js",
+    "static/css/main.4badfcd4.chunk.css.map": "//podogas.github.io/mesto-react/static/css/main.4badfcd4.chunk.css.map",
+    "static/js/2.096056a2.chunk.js.LICENSE.txt": "//podogas.github.io/mesto-react/static/js/2.096056a2.chunk.js.LICENSE.txt",
+    "static/media/index.css": "//podogas.github.io/mesto-react/static/media/trash-can.4220563a.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.e8402bce.js",
+    "static/js/runtime-main.7b132e14.js",
     "static/js/2.096056a2.chunk.js",
-    "static/css/main.f1642e67.chunk.css",
-    "static/js/main.b0292f27.chunk.js"
+    "static/css/main.4badfcd4.chunk.css",
+    "static/js/main.7715d2ea.chunk.js"
   ]
 }
