@@ -2,7 +2,6 @@ import React from 'react';
 import PopupWithForm from '../PopupWithForm/PopupWithForm.js';
 function AddPlacePopup(props) {
 const btn = document.querySelector('.popup__submit-btn_add-photo');
-const [isValid, setIsValid] = React.useState(false);
 const cardNameRef = React.useRef();
 const cardUrlRef = React.useRef();
 const [errorMessage, setErrorMessage] = React.useState('');
@@ -12,7 +11,6 @@ function handleValidation() {
     nameErr: cardNameRef.current.validationMessage,
     urlErr: cardUrlRef.current.validationMessage
   })
-   setIsValid(true)
    btn.removeAttribute('disabled', '');
    btn.classList.remove('popup__submit-btn_blocked');
  }
@@ -21,7 +19,6 @@ function handleValidation() {
     nameErr: cardNameRef.current.validationMessage,
     urlErr: cardUrlRef.current.validationMessage
   })
-  setIsValid(false);
   btn.setAttribute('disabled', '');
   btn.classList.add('popup__submit-btn_blocked');
   }

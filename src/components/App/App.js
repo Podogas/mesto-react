@@ -5,17 +5,19 @@ import Header from '../Header/Header.js';
 import Main from '../Main/Main.js';
 import Footer from '../Footer/Footer.js';
 import ImagePopup from '../ImagePopup/ImagePopup.js';
-import PopupWithForm from '../PopupWithForm/PopupWithForm.js';
 import EditProfilePopup from '../EditProfilePopup/EditProfilePopup.js';
 import EditAvatarPopup from '../EditAvatarPopup/EditAvatarPopup.js';
 import AddPlacePopup from '../AddPlacePopup/AddPlacePopup.js';
+import ConfirmDeletionPopup from '../ConfirmDeletionPopup/ConfirmDeletionPopup.js';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isConfirmDeletionPopupOpen, setIsConfirmDeletionPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [cardToDelete, setCardToDelete] = useState({});
   const [cards, setCards] = useState([]);
   React.useEffect(() => {
     mestoApi.getInitialCards().then((res)=>{
@@ -40,11 +42,16 @@ function App() {
   const handleEditAvatarClick = ()=>{
    setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   }
+   const handleCardConfirmDeletion = (card)=>{
+    setIsConfirmDeletionPopupOpen(!isConfirmDeletionPopupOpen);
+    setCardToDelete(card);
+  }
   const closeAllPopups = ()=>{
    setIsEditProfilePopupOpen(false)
    setIsAddPlacePopupOpen(false);
    setIsEditAvatarPopupOpen(false);
    setSelectedCard(false);
+   setIsConfirmDeletionPopupOpen(false);
   }
   const handleCardClick =(card)=>{
     setSelectedCard(card)
@@ -72,17 +79,19 @@ function App() {
     })
     .catch( err => console.error(`Ошибка ${err}` ));
   }
-  function handleCardDeletion(card){
-    mestoApi.deleteCard(card._id).then((deleledCard)=> {
-      const newCards = cards.filter((c)=> c._id !== card._id);
-      setCards(newCards);
-    })
-    .catch( err => console.error(`Ошибка ${err}` ));
-  }
+ 
   function handleAddPlaceSubmit(data){
     mestoApi.postNewCard(data).then((newCard)=>{  
       setCards([...cards, newCard]); 
       closeAllPopups();
+    })
+    .catch( err => console.error(`Ошибка ${err}` ));
+  }
+   function handleCardDeletion(){
+    console.log(cardToDelete._id)
+    mestoApi.deleteCard(cardToDelete._id).then((deleledCard)=> {
+      const newCards = cards.filter((c)=> c._id !== cardToDelete._id);
+      setCards(newCards);
     })
     .catch( err => console.error(`Ошибка ${err}` ));
   }
@@ -96,17 +105,12 @@ function App() {
           handleCardClick ={handleCardClick}
           cards = {cards}
           onCardLike = {handleCardLike}
-          onCardDelete = {handleCardDeletion}
+          onCardDelete = {handleCardConfirmDeletion}
           />
       <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser}/>
-
       <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddPlace={handleAddPlaceSubmit} />
-
-      
       <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar}/> 
-    
-      <PopupWithForm name="confirm-deletion" title="Вы уверены?" btnText="Да">
-      </PopupWithForm>          
+      <ConfirmDeletionPopup isOpen={isConfirmDeletionPopupOpen} onClose={closeAllPopups} onSubmit={handleCardDeletion}></ConfirmDeletionPopup>          
     <Footer/>
     <ImagePopup card={selectedCard} onClose={closeAllPopups}></ImagePopup>
    </div>  

@@ -7,7 +7,6 @@ function EditProfilePopup(props) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [isValid, setIsValid] = useState(false);
   const profileNameRef = React.useRef();
   const profileDesctiptionRef = React.useRef();
 
@@ -21,7 +20,6 @@ function handleValidation() {
     nameErr: profileNameRef.current.validationMessage,
     profileErr: profileDesctiptionRef.current.validationMessage
   })
-   setIsValid(true)
    btn.removeAttribute('disabled', '');
    btn.classList.remove('popup__submit-btn_blocked');
  }
@@ -30,7 +28,6 @@ function handleValidation() {
     nameErr: profileNameRef.current.validationMessage,
     profileErr: profileDesctiptionRef.current.validationMessage
   })
-  setIsValid(false);
   btn.setAttribute('disabled', '');
   btn.classList.add('popup__submit-btn_blocked');
   }

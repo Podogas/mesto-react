@@ -3,14 +3,12 @@ import PopupWithForm from '../PopupWithForm/PopupWithForm.js';
 function EditProfilePopup(props) {
 const avatarRef = React.useRef();  
 const btn = document.querySelector('.popup__submit-btn_edit-avatar');
-const [isValid, setIsValid] = React.useState(false);
 const [errorMessage, setErrorMessage] = React.useState('');
 function handleValidation() {
   if(avatarRef.current.validity.valid){
    setErrorMessage({
     urlErr: avatarRef.current.validationMessage
   })
-   setIsValid(true)
    btn.removeAttribute('disabled', '');
    btn.classList.remove('popup__submit-btn_blocked');
  }
@@ -18,7 +16,6 @@ function handleValidation() {
    setErrorMessage({
     urlErr: avatarRef.current.validationMessage
   })
-  setIsValid(false);
   btn.setAttribute('disabled', '');
   btn.classList.add('popup__submit-btn_blocked');
   }
