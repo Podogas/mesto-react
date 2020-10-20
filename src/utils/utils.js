@@ -1,4 +1,4 @@
-const changeTextContent = ((element,text) =>{
+const changeTextContent = (element, text) => {
   element.textContent = text;
-})
-export {changeTextContent}
+};
+export { changeTextContent };

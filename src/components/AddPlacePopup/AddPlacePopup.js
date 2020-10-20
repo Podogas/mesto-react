@@ -51,7 +51,9 @@ function handleSubmit(e) {
         <span className="popup__input-error-message" id="photoNameInput-err">{errorMessage.nameErr}</span>
         <input ref={cardUrlRef}type="url" name="photoUrl" id="photoUrlInput" placeholder="Ссылка на картинку" required className="popup__input-item popup__input-item_add-photo" onChange={handleUrlChange}/>
         <span className="popup__input-error-message" id="photoUrlInput-err">{errorMessage.urlErr}</span>
-        <button type='submit' disabled={disabled} className={classNames} >Сохранить</button>
+        <button type="submit" disabled={disabled} className={classNames}>
+  Сохранить
+</button>;
       </PopupWithForm>
 
 )};

@@ -13,8 +13,10 @@ function handleValidation() {
       setDisabled('')
       setClassNames('popup__submit-btn popup__submit-btn_edit-avatar')
     } else {
-      setDisabled('disabled')
-      setClassNames('popup__submit-btn popup__submit-btn_edit-avatar popup__submit-btn_blocked')
+      setDisabled("disabled");
+setClassNames(
+  "popup__submit-btn popup__submit-btn_edit-avatar popup__submit-btn_blocked"
+);
   }
 }
 
