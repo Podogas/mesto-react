@@ -8,10 +8,11 @@ function handleSubmit(e) {
   props.onClose();
 } 
   return (
-    <PopupWithForm name="confirm-deletion" title="Вы уверены?" btnText="Да" 
+    <PopupWithForm name="confirm-deletion" title="Вы уверены?" 
                    isOpen={props.isOpen} 
                    onClose={props.onClose} 
                    onSubmit={handleSubmit}>
+      <button type='submit'  className='popup__submit-btn' >Да</button>             
     </PopupWithForm>
 
 )};

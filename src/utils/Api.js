@@ -21,9 +21,7 @@ getInitialCards(){
     headers: this._headers,
     method: 'GET'}
     )
-    .then(res => 
-      this._checkResponse(res)
-    )
+    .then(this._checkResponse)
 };
 /*
 метод для получения информации о пользователе с сервера

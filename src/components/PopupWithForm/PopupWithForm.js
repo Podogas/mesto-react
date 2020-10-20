@@ -1,6 +1,5 @@
 import React from 'react';
 function PopupWithForm(props) {
-  
   return (
     <section className={`popup popup_${props.name} ${props.isOpen ? 'popup_opened' : ''}`}>
       <div className="popup__window">
@@ -13,8 +12,7 @@ function PopupWithForm(props) {
               method="post" 
               action=""
               >
-          {props.children}
-          <button type="submit" className={`popup__submit-btn popup__submit-btn_${props.name}`}>{props.btnText}</button>
+          {props.children}   
         </form>
       </div>
     </section>

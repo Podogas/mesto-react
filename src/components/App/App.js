@@ -19,16 +19,11 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [cardToDelete, setCardToDelete] = useState({});
   const [cards, setCards] = useState([]);
+  
   React.useEffect(() => {
-    mestoApi.getInitialCards().then((res)=>{
-      setCards(res);
-    })
-    .catch( err => console.error(`Ошибка при загрузке фотографий ${err}` ));
-  }, []); 
-
-  React.useEffect(() => {
-    mestoApi.getUserInfo().then((res)=>{
-      setCurrentUser(res)
+    mestoApi.getPageData().then(([profileData, initialCards])=>{
+      setCurrentUser(profileData);
+      setCards(initialCards);
     })
     .catch( err => console.error(`Ошибка при загрузке данных пользователя ${err}` ));
   }, []);
@@ -88,7 +83,6 @@ function App() {
     .catch( err => console.error(`Ошибка ${err}` ));
   }
    function handleCardDeletion(){
-    console.log(cardToDelete._id)
     mestoApi.deleteCard(cardToDelete._id).then((deleledCard)=> {
       const newCards = cards.filter((c)=> c._id !== cardToDelete._id);
       setCards(newCards);
