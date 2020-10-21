@@ -1,18 +1,19 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 
-function Card(props) {
+function Card({ cardData, onCardClick, onCardLike, onCardDelete }) {
   const user = React.useContext(CurrentUserContext);
-  const isOwn = props.cardData.owner._id === user._id;
-  const isLiked = props.cardData.likes.some((i) => i._id === user._id);
+  const isOwn = cardData.owner._id === user._id;
+  const isLiked = cardData.likes.some((i) => i._id === user._id);
   function handleClick() {
-    props.onCardClick(props.cardData);
+    onCardClick(cardData);
   }
   function handleLikeClick() {
-    props.onCardLike(props.cardData);
+    onCardLike(cardData);
   }
   function handleCardDeletion() {
-    props.onCardDelete(props.cardData);
+    onCardDelete(cardData);
   }
   return (
     <article className="element">
@@ -26,11 +27,11 @@ function Card(props) {
       <div className="element__image-wrap" onClick={handleClick}>
         <img
           className="element__image"
-          src={props.cardData.link}
-          alt={props.cardData.name}
+          src={cardData.link}
+          alt={cardData.name}
         />
       </div>
-      <h3 className="element__caption">{props.cardData.name}</h3>
+      <h3 className="element__caption">{cardData.name}</h3>
       <div className="element__like-wrapper">
         <button
           className={`element__like-button ${
@@ -39,11 +40,15 @@ function Card(props) {
           type="button"
           onClick={handleLikeClick}
         ></button>
-        <span className="element__like-counter">
-          {props.cardData.likes.length}
-        </span>
+        <span className="element__like-counter">{cardData.likes.length}</span>
       </div>
     </article>
   );
 }
+Card.propTypes = {
+  cardData: PropTypes.object,
+  onCardClick: PropTypes.func.isRequired,
+  onCardLike: PropTypes.func.isRequired,
+  onCardDelete: PropTypes.func.isRequired,
+};
 export default Card;

@@ -1,32 +1,37 @@
 import React from "react";
-function PopupWithForm(props) {
+import PropTypes from "prop-types";
+
+function PopupWithForm({ name, title, isOpen, onClose, onSubmit, children }) {
   return (
-    <section
-      className={`popup popup_${props.name} ${
-        props.isOpen ? "popup_opened" : ""
-      }`}
-    >
+    <section className={`popup popup_${name} ${isOpen ? "popup_opened" : ""}`}>
       <div className="popup__window">
         <button
-          className={`popup__close-btn popup__close-btn_${props.name}`}
+          className={`popup__close-btn popup__close-btn_${name}`}
           type="button"
-          onClick={props.onClose}
+          onClick={onClose}
         ></button>
-        <h2 className={`popup__heading popup__heading_${props.name}`}>
-          {props.title}
-        </h2>
+        <h2 className={`popup__heading popup__heading_${name}`}>{title}</h2>
         <form
           noValidate
-          onSubmit={props.onSubmit}
-          className={`popup__input-container popup__input-container_${props.name}`}
-          name={props.name}
+          onSubmit={onSubmit}
+          className={`popup__input-container popup__input-container_${name}`}
+          name={name}
           method="post"
           action=""
         >
-          {props.children}
+          {children}
         </form>
       </div>
     </section>
   );
 }
+
+PopupWithForm.propTypes = {
+  name: PropTypes.string,
+  title: PropTypes.string,
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  children: PropTypes.node,
+};
 export default PopupWithForm;

@@ -1,8 +1,17 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext.js";
 import Card from "../Card/Card.js";
 
-function Main(props) {
+function Main({
+  onEditProfile,
+  onAddPlace,
+  onEditAvatar,
+  handleCardClick,
+  cards,
+  onCardLike,
+  onCardDelete,
+}) {
   const user = React.useContext(CurrentUserContext);
 
   return (
@@ -10,7 +19,7 @@ function Main(props) {
       <section className="profile">
         <div
           className="profile__avatar"
-          onClick={props.onEditAvatar}
+          onClick={onEditAvatar}
           style={{ backgroundImage: `url(${user.avatar})` }}
         ></div>
         <div className="profile__info">
@@ -18,23 +27,23 @@ function Main(props) {
           <button
             className="profile__edit-button"
             type="button"
-            onClick={props.onEditProfile}
+            onClick={onEditProfile}
           ></button>
           <p className="profile__job">{user.about}</p>
         </div>
         <button
           className="profile__add-button"
           type="button"
-          onClick={props.onAddPlace}
+          onClick={onAddPlace}
         ></button>
       </section>
       <section className="elements">
-        {props.cards.map((card) => (
+        {cards.map((card) => (
           <Card
             cardData={card}
-            onCardClick={props.handleCardClick}
-            onCardLike={props.onCardLike}
-            onCardDelete={props.onCardDelete}
+            onCardClick={handleCardClick}
+            onCardLike={onCardLike}
+            onCardDelete={onCardDelete}
             key={card._id}
           ></Card>
         ))}
@@ -42,4 +51,14 @@ function Main(props) {
     </main>
   );
 }
+Main.propTypes = {
+  onEditProfile: PropTypes.func.isRequired,
+  onAddPlace: PropTypes.func.isRequired,
+  onEditAvatar: PropTypes.func.isRequired,
+  handleCardClick: PropTypes.func.isRequired,
+  onCardLike: PropTypes.func.isRequired,
+  onCardDelete: PropTypes.func.isRequired,
+  cards: PropTypes.array,
+};
+
 export default Main;

@@ -1,17 +1,18 @@
 import React from "react";
+import PropTypes from "prop-types";
 import PopupWithForm from "../PopupWithForm/PopupWithForm.js";
-function ConfirmDeletionPopup(props) {
+function ConfirmDeletionPopup({ isOpen, onClose, onSubmit }) {
   function handleSubmit(e) {
     e.preventDefault();
-    props.onSubmit();
-    props.onClose();
+    onSubmit();
+    onClose();
   }
   return (
     <PopupWithForm
       name="confirm-deletion"
       title="Вы уверены?"
-      isOpen={props.isOpen}
-      onClose={props.onClose}
+      isOpen={isOpen}
+      onClose={onClose}
       onSubmit={handleSubmit}
     >
       <button type="submit" className="popup__submit-btn">
@@ -20,4 +21,9 @@ function ConfirmDeletionPopup(props) {
     </PopupWithForm>
   );
 }
+ConfirmDeletionPopup.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+};
 export default ConfirmDeletionPopup;
