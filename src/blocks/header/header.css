@@ -1,6 +1,10 @@
 @import url('./__logo/header__logo.css');
+@import url('./__loginLink/header__loginLink.css');
+@import url('./__email/header__email.css');
 
 .header  {
+  display: flex;
+  justify-content: space-between;
   width: 68.8%;
   max-width: 990px;
   min-width: 300px;

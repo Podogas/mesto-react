@@ -50,7 +50,6 @@ function EditProfilePopup({ isOpen, onClose, onUpdateAvatar }) {
       <span className="popup__input-error-message" id="avatarUrlInput-err">
         {errorMessage.urlErr}
       </span>
-      {/*кнопка это часть формы, поэтому логично что она будет здесь а не в PopupWithForm*/}
       <button type="submit" disabled={disabled} className={classNames}>
         Сохранить
       </button>

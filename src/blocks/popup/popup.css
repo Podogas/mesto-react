@@ -13,6 +13,9 @@
 @import url('./__image/popup__image-photo-browsing.css');
 @import url('./__caption/popup__caption-photo-browsing.css');
 @import url('./__heading/_confirm-deletion/popup__heading_confirm-deletion.css');
+@import url('./__signStatus/popup__signStatus-image.css');
+@import url('./__signStatus/popup__signStatus-caption.css');
+
 .popup  {
  display: -webkit-flex;
   display: -moz-flex;
