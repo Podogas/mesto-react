@@ -8,6 +8,8 @@ function Login({onSubmit}) {
       <button type="submit" className="authForm__submit-btn">
         Войти
       </button>
+      {/*Здесь пустой див для того что бы после переключения на 
+      страницу регистрации и обратно футер не скакал вверх вниз*/}
       <div className="authForm__caption-link"></div>
     </AuthForm>
   );

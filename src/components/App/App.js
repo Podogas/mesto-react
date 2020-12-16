@@ -59,7 +59,7 @@ function App() {
         })
         .catch((err) => console.log(err));
     }
-  }, [history]);
+  }, [loggedIn, history]);
 
   // Регистрация
   function handleSignup(password, email) {
@@ -71,8 +71,7 @@ function App() {
           alt: "Галочка",
           text: "Вы успешно зарегистрировались",
         });
-        setLoggedIn(true);
-        history.push("/");
+        history.push("/signin");
       })
       .catch((err) =>
         setAuthPopupContent({
@@ -80,8 +79,10 @@ function App() {
           alt: "Красный крест",
           text: "Что-то пошло не так! Попробуйте еще раз.",
         })
-      );
-    setInfoTooltipVisible(true);
+      )
+      .finally(() => {
+        setInfoTooltipVisible(true);
+      });
   }
 
   // авторизация
@@ -89,12 +90,7 @@ function App() {
     auth
       .signIn(escape(password), email)
       .then((data) => {
-        auth
-          .getToken(data)
-          .then((res) => {
-            setEmail(res.data.email);
-          })
-          .catch((err) => console.log(err));
+        setEmail(data.email);
         setLoggedIn(true);
         history.push("/");
       })
